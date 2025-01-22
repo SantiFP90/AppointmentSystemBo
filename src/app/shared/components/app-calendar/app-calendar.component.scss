@@ -1,0 +1,152 @@
+:host ::ng-deep {
+  .calendar-container {
+    padding: 1rem;
+    background-color: #edf1ff; // 50
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+  }
+
+  .p-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+
+  .calendar-card {
+    .p-card-body {
+      padding: 1rem;
+    }
+
+    .fc {
+      .fc-toolbar {
+        flex-wrap: wrap;
+      }
+
+      .fc-toolbar-title {
+        color: #333; // 900
+        font-weight: bold;
+      }
+
+      .fc-button-primary {
+        background-color: #5a5ffa; // 500
+        border-color: #5a5ffa;
+
+        &:hover {
+          background-color: #443cef; // 600
+          border-color: #443cef;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .fc-day-today {
+        background-color: #c4d1ff !important; // 200
+      }
+
+      .fc-event {
+        background-color: #7a88ff; // 400
+        border-color: #7a88ff;
+      }
+    }
+  }
+
+  .form-card {
+    .p-card-header {
+      background-color: #443cef; // 600
+      color: white;
+      padding: 1rem;
+      border-radius: 0.75rem 0.75rem 0 0;
+      font-weight: bold;
+    }
+
+    .p-card-body {
+      padding: 1.25rem;
+    }
+  }
+
+  .appointment-form {
+    .field {
+      margin-bottom: 1rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #392fd3; // 700
+        font-weight: bold;
+      }
+
+      input,
+      textarea,
+      .p-dropdown {
+        border: 1px solid #a0b1ff; // 300
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: #443cef; // 600
+          box-shadow: 0 0 0 2px #c4d1ff; // 200
+        }
+      }
+    }
+
+    .minimal-button {
+      background-color: #443cef; // 600
+      border-color: #443cef;
+
+      &:hover {
+        background-color: #392fd3; // 700
+        border-color: #392fd3;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px #c4d1ff; // 200
+      }
+
+      &.p-button-disabled {
+        background-color: #dee6ff; // 100
+        border-color: #dee6ff;
+      }
+    }
+  }
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333; /* Color 'jacksons-purple-800' para los títulos */
+  display: block;
+  margin-bottom: 8px;
+}
+
+.field p {
+  font-size: 1.1rem;
+  color: #333; /* Texto en color oscuro para mayor legibilidad */
+  background-color: #f7f7f7; /* Fondo suave para los párrafos */
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd; /* Borde suave */
+}
+
+.field p:first-letter {
+  text-transform: capitalize;
+}
+
+.field p:hover {
+  background-color: #eef2ff; /* Color suave al pasar el mouse */
+  border-color: #7a88ff; /* Borde azul suave para interactividad */
+}
+
+.field p.selected {
+  background-color: #7a88ff; /* Fondo con el color 'jacksons-purple-400' */
+  color: #fff; /* Texto en blanco cuando está seleccionado */
+}
+
+.field p.selected:hover {
+  background-color: #5a5ffa; /* Cambio de fondo al pasar el mouse */
+}

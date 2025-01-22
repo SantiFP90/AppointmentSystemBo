@@ -1,0 +1,27 @@
+/* Contenedor principal del logo y título */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaciado entre el logo y el título */
+  padding: 10px;
+  background-color: #edf1ff3d; /* Fondo suave del contenedor */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo del logo */
+.logo-container img {
+  width: 50px; /* Tamaño del logo */
+  height: 50px;
+  object-fit: contain;
+  border-radius: 15px 2px 15px 2px;
+}
+
+/* Estilo del título */
+.logo-container .title {
+  font-size: 1.5rem; /* Tamaño del texto principal */
+  font-weight: bold; /* Texto más grueso */
+  color: #443cef; /* Color del título (jacksons-purple 600) */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra para el texto */
+  font-family: "Arial", sans-serif; /* Fuente limpia y profesional */
+}
