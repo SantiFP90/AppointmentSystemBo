@@ -25,6 +25,20 @@ export const MainRoutes: Routes = [
             (c) => c.ProfileComponent
           ),
       },
+      {
+        path: 'history',
+        loadComponent: () =>
+          import('./pages/turn-history/turn-history.component').then(
+            (c) => c.TurnHistoryComponent
+          ),
+      },
+      {
+        path: 'administration',
+        loadComponent: () =>
+          import(
+            './pages/administration-calendar/administration-calendar.component'
+          ).then((c) => c.AdministrationCalendarComponent),
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

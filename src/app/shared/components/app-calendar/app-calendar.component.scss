@@ -1,7 +1,7 @@
 :host ::ng-deep {
   .calendar-container {
     padding: 1rem;
-    background-color: #edf1ff; // 50
+    background-color: #edf1ff59;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
   }
@@ -24,16 +24,16 @@
       }
 
       .fc-toolbar-title {
-        color: #333; // 900
+        color: #333;
         font-weight: bold;
       }
 
       .fc-button-primary {
-        background-color: #5a5ffa; // 500
+        background-color: #5a5ffa;
         border-color: #5a5ffa;
 
         &:hover {
-          background-color: #443cef; // 600
+          background-color: #443cef;
           border-color: #443cef;
         }
 
@@ -43,11 +43,11 @@
       }
 
       .fc-day-today {
-        background-color: #c4d1ff !important; // 200
+        background-color: #c4d1ff !important;
       }
 
       .fc-event {
-        background-color: #7a88ff; // 400
+        background-color: #7a88ff;
         border-color: #7a88ff;
       }
     }
@@ -55,7 +55,7 @@
 
   .form-card {
     .p-card-header {
-      background-color: #443cef; // 600
+      background-color: #443cef;
       color: white;
       padding: 1rem;
       border-radius: 0.75rem 0.75rem 0 0;
@@ -74,38 +74,38 @@
       label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #392fd3; // 700
+        color: #392fd3;
         font-weight: bold;
       }
 
       input,
       textarea,
       .p-dropdown {
-        border: 1px solid #a0b1ff; // 300
+        border: 1px solid #a0b1ff;
         transition: border-color 0.3s, box-shadow 0.3s;
 
         &:focus {
-          border-color: #443cef; // 600
-          box-shadow: 0 0 0 2px #c4d1ff; // 200
+          border-color: #443cef;
+          box-shadow: 0 0 0 2px #c4d1ff;
         }
       }
     }
 
     .minimal-button {
-      background-color: #443cef; // 600
+      background-color: #443cef;
       border-color: #443cef;
 
       &:hover {
-        background-color: #392fd3; // 700
+        background-color: #392fd3;
         border-color: #392fd3;
       }
 
       &:focus {
-        box-shadow: 0 0 0 2px #c4d1ff; // 200
+        box-shadow: 0 0 0 2px #c4d1ff;
       }
 
       &.p-button-disabled {
-        background-color: #dee6ff; // 100
+        background-color: #dee6ff;
         border-color: #dee6ff;
       }
     }
@@ -119,18 +119,18 @@
 .field label {
   font-size: 1rem;
   font-weight: 700;
-  color: #333; /* Color 'jacksons-purple-800' para los títulos */
+  color: #333;
   display: block;
   margin-bottom: 8px;
 }
 
 .field p {
   font-size: 1.1rem;
-  color: #333; /* Texto en color oscuro para mayor legibilidad */
-  background-color: #f7f7f7; /* Fondo suave para los párrafos */
+  color: #333;
+  background-color: #f7f7f7;
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ddd; /* Borde suave */
+  border: 1px solid #ddd;
 }
 
 .field p:first-letter {
@@ -138,15 +138,15 @@
 }
 
 .field p:hover {
-  background-color: #eef2ff; /* Color suave al pasar el mouse */
-  border-color: #7a88ff; /* Borde azul suave para interactividad */
+  background-color: #eef2ff;
+  border-color: #7a88ff;
 }
 
 .field p.selected {
-  background-color: #7a88ff; /* Fondo con el color 'jacksons-purple-400' */
-  color: #fff; /* Texto en blanco cuando está seleccionado */
+  background-color: #7a88ff;
+  color: #fff;
 }
 
 .field p.selected:hover {
-  background-color: #5a5ffa; /* Cambio de fondo al pasar el mouse */
+  background-color: #5a5ffa;
 }

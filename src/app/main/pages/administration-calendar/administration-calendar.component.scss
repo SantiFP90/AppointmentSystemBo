@@ -1,0 +1,89 @@
+.administration-container {
+  padding: 1rem;
+  background-color: #edf1ff59;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+:host ::ng-deep {
+  .info-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .icon-container {
+    color: #5a5ffa;
+    font-size: 5rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+  }
+
+  .text-container {
+    flex-grow: 1;
+  }
+
+  h3 {
+    color: #5a5ffa;
+    font-size: 1.2rem;
+  }
+
+  .text-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #666;
+  }
+
+  .text-container li {
+    margin-bottom: 5px;
+  }
+}
+
+/* calendar-configuration.component.scss */
+:host {
+  ::ng-deep {
+    .p-dropdown,
+    .p-multiselect {
+      width: 100%;
+    }
+
+    .p-dropdown .p-dropdown-label,
+    .p-multiselect .p-multiselect-label {
+      color: #5a5ffa !important;
+    }
+
+    .p-button-primary {
+      background-color: #5a5ffa !important;
+      border-color: #5a5ffa !important;
+    }
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+      background-color: #5a5ffa !important;
+      border-color: #5a5ffa !important;
+    }
+  }
+
+  .calendar-configuration-container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+  }
+
+  .configuration-section {
+    h2 {
+      color: #5a5ffa;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  .actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+}

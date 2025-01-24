@@ -1,0 +1,23 @@
+.history-container {
+  padding: 1rem;
+  background-color: #edf1ff59;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.search-label {
+  color: #5a5ffa;
+}
+
+.table-container {
+  background-color: #edf1ff3d;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep {
+  .p-button.p-button-outlined {
+    color: #5a5ffa;
+    border-color: #5a5ffa;
+  }
+}

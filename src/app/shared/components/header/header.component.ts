@@ -24,6 +24,9 @@ export class HeaderComponent {
     {
       label: 'Administrar calendario',
       icon: 'pi pi-file-edit',
+      command: () => {
+        this.router.navigate(['/main/administration']);
+      },
     },
     {
       label: 'Calendario',
@@ -35,10 +38,31 @@ export class HeaderComponent {
     {
       label: 'Historial',
       icon: 'pi pi-clock',
+      command: () => {
+        this.router.navigate(['/main/history']);
+      },
     },
     {
       label: 'Perfil',
       icon: 'pi pi-user',
+      items: [
+        {
+          label: 'Cerrar Sesión',
+          icon: 'pi pi-lock',
+        },
+        {
+          label: 'Editar',
+          icon: 'pi pi-pencil',
+        },
+        {
+          label: 'Cambiar contraseña',
+          icon: 'pi pi-replay',
+        },
+      ],
     },
   ];
+
+  goHome() {
+    this.router.navigate(['/main/dashboard']);
+  }
 }

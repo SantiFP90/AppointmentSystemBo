@@ -1,12 +1,12 @@
 <div class="calendar-container">
   <div class="grid">
     <div class="col-12 lg:col-8">
-      <p-card styleClass="calendar-card">
+      <p-card styleClass="calendar-card fadein animation-duration-1000">
         <full-calendar [options]="calendarOptions"></full-calendar>
       </p-card>
     </div>
 
-    <div class="col-12 lg:col-4">
+    <div class="col-12 lg:col-4 fadein animation-duration-1000">
       <p-card
         [header]="viewTurn ? 'Visualizar Turno' : 'Registrar Turno'"
         styleClass="form-card"
