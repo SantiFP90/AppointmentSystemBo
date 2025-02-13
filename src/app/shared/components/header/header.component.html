@@ -1,7 +1,10 @@
 <div class="card">
   <p-menubar [model]="items">
     <ng-template pTemplate="start">
-      <div class="logo-container ml-2 mr-2 cursor-pointer" (click)="goHome()">
+      <div
+        class="flipup animation-duration-1000 logo-container ml-2 mr-2 cursor-pointer"
+        (click)="goHome()"
+      >
         <img src="../../../../../assets/logo.svg" alt="Logo" />
         <span class="title">Mi Turnero Online</span>
       </div>
