@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,14 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
@@ -42,8 +42,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
   styleUrl: './app-calendar.component.scss',
   providers: [MessageService],
 })
-export class AppCalendarComponent {
+export class AppCalendarComponent implements OnInit {
   appointmentForm: FormGroup;
+
+  workingDays: any[] = [];
 
   events: any[] = [];
 
@@ -107,6 +109,10 @@ export class AppCalendarComponent {
       time: ['', Validators.required],
       description: [''],
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   handleDateClick(arg: any) {

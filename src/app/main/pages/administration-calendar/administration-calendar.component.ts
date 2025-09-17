@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { AccordionModule } from 'primeng/accordion';
-import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-administration-calendar',
@@ -71,7 +71,7 @@ export class AdministrationCalendarComponent implements OnInit {
   // Weekend Options
   weekendOptions = [
     { name: 'Trabajar sábados y domingos', code: 'ALL_WEEKEND' },
-    { name: 'Sábados y domingos', code: 'WEEKEND' },
+    { name: 'Sábados y domingos por la mañana', code: 'WEEKEND' },
     { name: 'Solo sábados', code: 'SATURDAY' },
     { name: 'Solo sábados por la mañana', code: 'SATURDAY_MORNING' },
   ];
@@ -83,7 +83,6 @@ export class AdministrationCalendarComponent implements OnInit {
   selectedHolidays: any[] = [];
 
   ngOnInit(): void {
-    // Populate holiday options based on current month
     this.populateHolidayOptions();
   }
 
