@@ -29,5 +29,19 @@ export const appoimentReducer = createReducer(
     ...state,
     error: error,
     loading: false,
+  })),
+  on(AppointmentActions.createAppointment, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(AppointmentActions.createAppointmentSuccess, (state) => ({
+    ...state,
+    loading: false,
+  })),
+  on(AppointmentActions.createAppointmentFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );

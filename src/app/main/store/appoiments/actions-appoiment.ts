@@ -20,3 +20,21 @@ export const addloadAppoiment = createAction(
   '[Appoiment] Add Appoiment Success',
   props<{ appointment: Appointment }>()
 );
+
+// Create Appointment
+export const createAppointment = createAction(
+  '[Appoiment] Create Appointment',
+  props<{
+    payload: Appointment;
+    selectedDate: string; // ISO string of the selected date to refresh calendar
+  }>()
+);
+
+export const createAppointmentSuccess = createAction(
+  '[Appoiment] Create Appointment Success'
+);
+
+export const createAppointmentFailure = createAction(
+  '[Appoiment] Create Appointment Failure',
+  props<{ error: string }>()
+);

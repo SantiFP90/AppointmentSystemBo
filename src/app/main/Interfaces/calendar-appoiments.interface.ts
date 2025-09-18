@@ -1,4 +1,5 @@
 export interface CalendarDay {
+  workingDayId: number;
   date: string;
   timeSlots: CalendarTimeSlot[];
 }

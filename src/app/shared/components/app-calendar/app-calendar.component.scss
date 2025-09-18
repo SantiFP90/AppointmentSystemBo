@@ -1,7 +1,7 @@
 :host ::ng-deep {
   .calendar-container {
     padding: 1rem;
-    background-color: #edf1ff59;
+    background-color: #edf1ff98;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
   }
@@ -15,7 +15,7 @@
 
   .calendar-card {
     .p-card-body {
-      padding: 1rem;
+      padding: 0.5rem;
     }
 
     .fc {
@@ -49,6 +49,10 @@
       .fc-event {
         background-color: #7a88ff;
         border-color: #7a88ff;
+        padding: 0 2px;
+        margin: 1px 0;
+        line-height: 1.1;
+        font-size: 0.75rem;
       }
     }
   }
@@ -108,6 +112,62 @@
         background-color: #dee6ff;
         border-color: #dee6ff;
       }
+    }
+  }
+
+  /* Dropdown time slot styles aligned with palette */
+  .dropdown-item,
+  .dropdown-item-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .time-with-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .status-badge {
+    border-radius: 999px;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .status-badge--free {
+    background-color: #efffe6; /* light variant from palette */
+    color: #5dd32f; /* primary text */
+    border: 1px solid #b3ff99;
+  }
+
+  .status-badge--busy {
+    background-color: #fde8e8;
+    color: #b91c1c;
+    border: 1px solid #f5c2c2;
+  }
+
+  .dropdown-item--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    .time-with-dot {
+      color: #999;
+    }
+
+    .status-dot--busy {
+      background-color: #ccc;
+    }
+
+    .status-badge--busy {
+      background-color: #f5f5f5;
+      color: #999;
+      border-color: #ddd;
     }
   }
 }

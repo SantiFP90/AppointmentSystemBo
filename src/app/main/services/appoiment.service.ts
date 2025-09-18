@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
@@ -31,7 +31,16 @@ export class AppoimentService {
     year: number
   ): Observable<ApiResponse<CalendarDay[]>> {
     return this.http.get<ApiResponse<CalendarDay[]>>(
-      `${this.apiUrl}/Appointment/getAppoimentByMonthYear?month=${month}&year=${year}'`
+      `${this.apiUrl}/Appointment/getAppoimentByMonthYear?month=${month}&year=${year}`
+    );
+  }
+
+  createAppointment(payload: Appointment): Observable<ApiResponse<null>> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<ApiResponse<null>>(
+      `${this.apiUrl}/Appointment/create`,
+      payload,
+      { headers }
     );
   }
 }
