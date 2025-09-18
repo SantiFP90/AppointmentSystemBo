@@ -3,16 +3,25 @@
     class="flex align-items-center justify-content-center mt-2 gap-3 fadein animation-duration-1000"
   >
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-user"></i> 5</span>
+      <span>
+        <i class="pi pi-user"></i>
+        {{ countAppoiment().pedingAppointmentsToday }}</span
+      >
       <h5>Cantidad de turnos pendientes hoy</h5>
     </div>
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-users"></i> 10</span>
+      <span>
+        <i class="pi pi-users"></i>
+        {{ countAppoiment().pendingAppoimentsThisWeek }}</span
+      >
       <h5>Cantidad de turnos esta semana</h5>
     </div>
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-chart-line"></i> 135</span>
-      <h5>Cantidad de turnos realizados</h5>
+      <span>
+        <i class="pi pi-chart-line"></i>
+        {{ countAppoiment().availableAppointments }}</span
+      >
+      <h5>Cantidad de turnos otorgados</h5>
     </div>
     <div
       class="card-count cards-container p-2 text-center cursor-pointer"

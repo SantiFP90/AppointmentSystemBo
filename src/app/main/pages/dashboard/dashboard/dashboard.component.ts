@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
-import { CardModule } from 'primeng/card';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
+import { CountAppoiments } from '../../../Interfaces/count-appoiment.interface';
+import { AppoimentService } from '../../../services/appoiment.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +17,19 @@ export class DashboardComponent implements OnInit {
 
   options: any;
 
-  constructor(private router: Router) {}
+  countAppoiment = signal<CountAppoiments>({
+    availableAppointments: 0,
+    pedingAppointmentsToday: 0,
+    pendingAppoimentsThisWeek: 0,
+  });
+
+  constructor(
+    private router: Router,
+    private appoimentService: AppoimentService
+  ) {}
 
   ngOnInit() {
+    this.getCountAppoiments();
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -86,6 +98,12 @@ export class DashboardComponent implements OnInit {
         },
       },
     };
+  }
+
+  getCountAppoiments() {
+    this.appoimentService.getCountAppoiments().subscribe((response) => {
+      this.countAppoiment.set(response.data!);
+    });
   }
 
   goCalendar() {

@@ -29,12 +29,12 @@
       }
 
       .fc-button-primary {
-        background-color: #5a5ffa;
-        border-color: #5a5ffa;
+        background-color: #6c5ce7;
+        border-color: #6c5ce7;
 
         &:hover {
-          background-color: #443cef;
-          border-color: #443cef;
+          background-color: #6c5ce7;
+          border-color: #6c5ce7;
         }
 
         &:focus {
@@ -47,8 +47,8 @@
       }
 
       .fc-event {
-        background-color: #7a88ff;
-        border-color: #7a88ff;
+        background-color: #6c5ce7;
+        border-color: #6c5ce7;
         padding: 0 2px;
         margin: 1px 0;
         line-height: 1.1;
@@ -59,7 +59,7 @@
 
   .form-card {
     .p-card-header {
-      background-color: #443cef;
+      background-color: #6c5ce7;
       color: white;
       padding: 1rem;
       border-radius: 0.75rem 0.75rem 0 0;
@@ -78,7 +78,7 @@
       label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #392fd3;
+        color: #6c5ce7;
         font-weight: bold;
       }
 
@@ -89,15 +89,15 @@
         transition: border-color 0.3s, box-shadow 0.3s;
 
         &:focus {
-          border-color: #443cef;
+          border-color: #6c5ce7;
           box-shadow: 0 0 0 2px #c4d1ff;
         }
       }
     }
 
     .minimal-button {
-      background-color: #443cef;
-      border-color: #443cef;
+      background-color: #6c5ce7;
+      border-color: #6c5ce7;
 
       &:hover {
         background-color: #392fd3;

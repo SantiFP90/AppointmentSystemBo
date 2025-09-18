@@ -84,7 +84,7 @@ export class AppCalendarComponent implements OnInit {
     expandRows: false,
     dayMaxEventRows: 2,
     dayMaxEvents: 2,
-    moreLinkClick: 'popover',
+    moreLinkClick: 'day',
     moreLinkText: (n) => `+${n} más`,
     headerToolbar: {
       left: 'prev,next',
@@ -350,10 +350,6 @@ export class AppCalendarComponent implements OnInit {
     }
   }
 
-  clearSelectedTime() {
-    this.appointmentForm.patchValue({ time: null });
-  }
-
   openRegisterModal() {
     this.displayDialog = true;
   }
@@ -368,6 +364,7 @@ export class AppCalendarComponent implements OnInit {
     let filled = 0;
     const total = 5;
     if (controls['name'].value) filled++;
+    if (controls['dni'].value) filled++;
     if (controls['date'].value) filled++;
     if (controls['time'].value) filled++;
     if (controls['clientEmail'].value) filled++;

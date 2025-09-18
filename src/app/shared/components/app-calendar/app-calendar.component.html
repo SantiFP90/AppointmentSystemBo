@@ -63,80 +63,66 @@
 
         <div class="field">
           <label for="time">Hora</label>
-          <div class="flex align-items-center gap-2">
-            <p-dropdown
-              id="time"
-              formControlName="time"
-              placeholder="Seleccionar hora"
-              [options]="timeSlots()"
-              optionLabel="timeRange"
-              optionValue="id"
-              styleClass="w-full"
-              emptyMessage="Seleccione una fecha."
-            >
-              <ng-template pTemplate="selectedItem" let-option>
-                <div class="dropdown-item-selected w-full">
-                  <div class="time-with-dot">
-                    <span
-                      class="status-dot"
-                      [ngClass]="
-                        (option ? option.isAvailable : getSelectedIsAvailable())
-                          ? 'status-dot--free'
-                          : 'status-dot--busy'
-                      "
-                    ></span>
-                    <span>{{
-                      option?.timeRange || getSelectedTimeLabel()
-                    }}</span>
-                  </div>
+          <p-dropdown
+            id="time"
+            formControlName="time"
+            placeholder="Seleccionar hora"
+            [options]="timeSlots()"
+            optionLabel="timeRange"
+            optionValue="id"
+            styleClass="w-full"
+            emptyMessage="Seleccione una fecha."
+          >
+            <ng-template pTemplate="selectedItem" let-option>
+              <div class="dropdown-item-selected w-full">
+                <div class="time-with-dot">
                   <span
-                    class="status-badge"
+                    class="status-dot"
                     [ngClass]="
                       (option ? option.isAvailable : getSelectedIsAvailable())
-                        ? 'status-badge--free'
-                        : 'status-badge--busy'
+                        ? 'status-dot--free'
+                        : 'status-dot--busy'
                     "
-                  >
-                    {{
-                      (option ? option.isAvailable : getSelectedIsAvailable())
-                        ? "Libre"
-                        : "Ocupado"
-                    }}
-                  </span>
+                  ></span>
+                  <span>{{ option?.timeRange || getSelectedTimeLabel() }}</span>
                 </div>
-              </ng-template>
-              <ng-template pTemplate="item" let-option>
-                <div
-                  class="dropdown-item w-full"
+                <span
+                  class="status-badge"
                   [ngClass]="
-                    !option.isAvailable ? 'dropdown-item--disabled' : ''
+                    (option ? option.isAvailable : getSelectedIsAvailable())
+                      ? 'status-badge--free'
+                      : 'status-badge--busy'
                   "
                 >
-                  <div class="time-with-dot">
-                    <span>{{ option.timeRange }}</span>
-                  </div>
-                  <span
-                    class="status-badge"
-                    [ngClass]="
-                      option.isAvailable
-                        ? 'status-badge--free'
-                        : 'status-badge--busy'
-                    "
-                  >
-                    {{ option.isAvailable ? "Libre" : "Ocupado" }}
-                  </span>
+                  {{
+                    (option ? option.isAvailable : getSelectedIsAvailable())
+                      ? "Libre"
+                      : "Ocupado"
+                  }}
+                </span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="item" let-option>
+              <div
+                class="dropdown-item w-full"
+                [ngClass]="!option.isAvailable ? 'dropdown-item--disabled' : ''"
+              >
+                <div class="time-with-dot">
+                  <span>{{ option.timeRange }}</span>
                 </div>
-              </ng-template>
-            </p-dropdown>
-            <button
-              type="button"
-              pButton
-              icon="pi pi-times"
-              class="p-button-text p-button-rounded"
-              (click)="clearSelectedTime()"
-              title="Quitar horario"
-            ></button>
-          </div>
+                <span
+                  class="status-badge"
+                  [ngClass]="
+                    option.isAvailable
+                      ? 'status-badge--free'
+                      : 'status-badge--busy'
+                  "
+                >
+                  {{ option.isAvailable ? "Libre" : "Ocupado" }}
+                </span>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </div>
 
         <div class="field">
@@ -171,9 +157,8 @@
             id="amount"
             type="number"
             pInputText
-            formControlName="amount"
             class="w-full"
-            placeholder="10000"
+            placeholder="$10.000"
             [readonly]="true"
           />
         </div>
