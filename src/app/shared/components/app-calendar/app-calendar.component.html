@@ -86,20 +86,6 @@
                   ></span>
                   <span>{{ option?.timeRange || getSelectedTimeLabel() }}</span>
                 </div>
-                <span
-                  class="status-badge"
-                  [ngClass]="
-                    (option ? option.isAvailable : getSelectedIsAvailable())
-                      ? 'status-badge--free'
-                      : 'status-badge--busy'
-                  "
-                >
-                  {{
-                    (option ? option.isAvailable : getSelectedIsAvailable())
-                      ? "Libre"
-                      : "Ocupado"
-                  }}
-                </span>
               </div>
             </ng-template>
             <ng-template pTemplate="item" let-option>

@@ -29,12 +29,13 @@
       }
 
       .fc-button-primary {
-        background-color: #6c5ce7;
-        border-color: #6c5ce7;
+        color: #333;
+        background-color: #b9f2ff !important;
+        border: 1px solid #2fa5bf;
 
         &:hover {
-          background-color: #6c5ce7;
-          border-color: #6c5ce7;
+          background-color: #b9f2ff !important;
+          border: 1px solid #2fa5bf;
         }
 
         &:focus {
@@ -47,8 +48,8 @@
       }
 
       .fc-event {
-        background-color: #6c5ce7;
-        border-color: #6c5ce7;
+        background-color: #b9ffc6 !important;
+        border: 2px solid #73fa8b;
         padding: 0 2px;
         margin: 1px 0;
         line-height: 1.1;
@@ -78,30 +79,30 @@
       label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #6c5ce7;
+        color: #5ccee7;
         font-weight: bold;
       }
 
       input,
       textarea,
       .p-dropdown {
-        border: 1px solid #a0b1ff;
         transition: border-color 0.3s, box-shadow 0.3s;
 
         &:focus {
-          border-color: #6c5ce7;
+          border-color: #2fa5bf;
           box-shadow: 0 0 0 2px #c4d1ff;
         }
       }
     }
 
     .minimal-button {
-      background-color: #6c5ce7;
-      border-color: #6c5ce7;
+      color: #333;
+      background-color: #1aa6c5;
+      border: 1px solid #2fa5bf;
 
       &:hover {
-        background-color: #392fd3;
-        border-color: #392fd3;
+        background-color: #b9f2ff !important;
+        border: 2px solid #2fa5bf;
       }
 
       &:focus {
@@ -109,8 +110,8 @@
       }
 
       &.p-button-disabled {
-        background-color: #dee6ff;
-        border-color: #dee6ff;
+        background-color: #b9f2ffc0 !important;
+        border: 2px solid #2fa5bf;
       }
     }
   }
@@ -140,8 +141,8 @@
   }
 
   .status-badge--free {
-    background-color: #efffe6; /* light variant from palette */
-    color: #5dd32f; /* primary text */
+    background-color: #efffe6;
+    color: #5dd32f;
     border: 1px solid #b3ff99;
   }
 
@@ -191,22 +192,4 @@
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ddd;
-}
-
-.field p:first-letter {
-  text-transform: capitalize;
-}
-
-.field p:hover {
-  background-color: #eef2ff;
-  border-color: #7a88ff;
-}
-
-.field p.selected {
-  background-color: #7a88ff;
-  color: #fff;
-}
-
-.field p.selected:hover {
-  background-color: #5a5ffa;
 }

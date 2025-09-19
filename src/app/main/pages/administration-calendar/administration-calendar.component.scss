@@ -13,11 +13,9 @@
   }
 
   .icon-container {
-    color: #6c5ce7;
-    font-size: 5rem;
+    color: #eaf733;
+    font-size: 1.2rem;
     font-weight: 900;
-    display: flex;
-    align-items: center;
   }
 
   .text-container {
@@ -25,7 +23,7 @@
   }
 
   h3 {
-    color: #6c5ce7;
+    color: #333;
     font-size: 1.2rem;
   }
 
@@ -50,17 +48,18 @@
 
     .p-dropdown .p-dropdown-label,
     .p-multiselect .p-multiselect-label {
-      color: #6c5ce7 !important;
+      color: #333 !important;
     }
 
     .p-button-primary {
-      background-color: #6c5ce7 !important;
-      border-color: #6c5ce7 !important;
+      color: #333 !important;
+      background-color: #b9f2ff;
+      border: 1px solid #2fa5bf;
     }
 
     .p-checkbox .p-checkbox-box.p-highlight {
-      background-color: #6c5ce7 !important;
-      border-color: #6c5ce7 !important;
+      background-color: #b9f2ff !important;
+      border: 1px solid #2fa5bf;
     }
   }
 
@@ -74,7 +73,7 @@
 
   .configuration-section {
     h2 {
-      color: #6c5ce7;
+      color: #333;
       text-align: center;
       margin-bottom: 20px;
     }
