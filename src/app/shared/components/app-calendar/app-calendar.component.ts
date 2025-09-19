@@ -119,6 +119,9 @@ export class AppCalendarComponent implements OnInit {
     dateClick: this.handleDateClick.bind(this),
     eventClick: this.handleEventClick.bind(this),
     datesSet: this.handleDatesSet.bind(this),
+    validRange: {
+      start: new Date().toISOString().split('T')[0],
+    },
   };
 
   constructor(

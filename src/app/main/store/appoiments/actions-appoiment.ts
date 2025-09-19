@@ -21,12 +21,11 @@ export const addloadAppoiment = createAction(
   props<{ appointment: Appointment }>()
 );
 
-// Create Appointment
 export const createAppointment = createAction(
   '[Appoiment] Create Appointment',
   props<{
     payload: Appointment;
-    selectedDate: string; // ISO string of the selected date to refresh calendar
+    selectedDate: string;
   }>()
 );
 
