@@ -5,6 +5,11 @@
   font-family: "Inter", sans-serif;
 }
 
+.span-title {
+  color: #2fa5bf;
+  font-weight: 900;
+}
+
 :host ::ng-deep {
   .info-content {
     display: flex;

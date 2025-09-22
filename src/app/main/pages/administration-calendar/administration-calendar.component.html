@@ -31,7 +31,7 @@
       class="calendar-configuration-container mt-3 fadein animation-duration-1000"
     >
       <div class="configuration-section">
-        <h2>Configuración de Calendario</h2>
+        <h2>Configuración de <span class="span-title" >Calendario</span></h2>
         <div class="p-fluid grid">
           <div class="col-12 md:col-6 mb-2">
             <div class="flex gap-2 align-items-center">
@@ -56,36 +56,36 @@
             <p-multiSelect
               [options]="daysOptions"
               optionLabel="name"
-              optionValue="code"
+              optionValue="value"
+              formControlName="days"
               placeholder="Seleccionar Días"
+              selectedItemsLabel="{0} días seleccionados"
             >
             </p-multiSelect>
           </div>
 
           <div class="col-12 md:col-6">
-            <span class="p-float-label">
-              <p-dropdown
-                [options]="intervalOptions"
-                optionLabel="label"
-                formControlName="slotDurationMinutes"
-                optionValue="value"
-              >
-              </p-dropdown>
-              <label>Intervalos de Tiempo</label>
-            </span>
+            <p-dropdown
+              [options]="intervalOptions"
+              optionLabel="label"
+              formControlName="slotDurationMinutes"
+              placeholder="Intervalos de Tiempo. Ej: 15 minutos"
+              optionValue="value"
+            >
+            </p-dropdown>
           </div>
 
           <div class="col-12 md:col-6">
             <div class="flex gap-2 align-items-center">
               <p-calendar
                 inputId="calendar-timeonly"
-                placeholder="Hora de Inicio de Jornada"
+                placeholder="Hora de Inicio de Jornada. Ej: 08:00"
                 formControlName="startTime"
                 class="w-full"
                 [timeOnly]="true"
               />
               <p-calendar
-                placeholder="Hora de Fin de Jornada"
+                placeholder="Hora de Fin de Jornada. Ej: 17:00"
                 inputId="calendar-timeonly"
                 formControlName="endTime"
                 [timeOnly]="true"
@@ -97,6 +97,7 @@
           <div class="col-12 actions-container">
             <p-button
               label="Guardar Cambios"
+              [disabled]="calendarForm.invalid"
               (click)="saveConfiguration()"
               styleClass="p-button-primary"
             >

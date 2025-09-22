@@ -174,7 +174,7 @@ export class AppCalendarComponent implements OnInit {
             end: end,
             backgroundColor: slot.isAvailable ? '#4CAF50' : '#FF6B6B',
             borderColor: slot.isAvailable ? '#4CAF50' : '#FF6B6B',
-            textColor: '#fff',
+            textColor: '#333 !important',
             extendedProps: {
               ...slot,
               workingDayId: day.workingDayId,

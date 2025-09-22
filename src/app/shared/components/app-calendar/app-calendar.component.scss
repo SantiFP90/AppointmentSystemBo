@@ -23,6 +23,17 @@
       padding: 0.5rem;
     }
 
+    .fc-v-event .fc-event-title {
+      color: #333 !important;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    .fc-timegrid-event .fc-event-time {
+      color: #333 !important;
+      font-size: 1rem;
+    }
+
     .fc {
       .fc-toolbar {
         flex-wrap: wrap;
@@ -55,6 +66,7 @@
       .fc-event {
         background-color: #b9ffc6 !important;
         border: 2px solid #73fa8b;
+        color: #333 !important;
         padding: 0 2px;
         margin: 1px 0;
         line-height: 1.1;
@@ -102,8 +114,8 @@
 
     .minimal-button {
       color: #333;
-      background-color: #1aa6c5;
-      border: 1px solid #2fa5bf;
+      background-color: #b9f2ff !important;
+      border: 2px solid #2fa5bf;
 
       &:hover {
         background-color: #b9f2ff !important;
@@ -115,7 +127,7 @@
       }
 
       &.p-button-disabled {
-        background-color: #b9f2ffc0 !important;
+        background-color: #afb7b9c0 !important;
         border: 2px solid #2fa5bf;
       }
     }

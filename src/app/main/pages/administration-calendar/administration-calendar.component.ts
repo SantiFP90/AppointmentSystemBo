@@ -64,20 +64,6 @@ export class AdministrationCalendarComponent implements OnInit {
     { label: '1 hora', value: 60 },
   ];
 
-  // Weekend Options
-  weekendOptions = [
-    { name: 'Trabajar sábados y domingos', value: 'ALL_WEEKEND' },
-    { name: 'Sábados y domingos por la mañana', value: 'WEEKEND' },
-    { name: 'Solo sábados', value: 'SATURDAY' },
-    { name: 'Solo sábados por la mañana', value: 'SATURDAY_MORNING' },
-  ];
-  selectedWeekendOption: any;
-
-  // Holiday Options
-  holidaysEnabled: boolean = false;
-  holidayOptions: any[] = [];
-  selectedHolidays: any[] = [];
-
   constructor(
     private fb: FormBuilder,
     private workingDaysService: WorkingDaysService,
@@ -89,20 +75,11 @@ export class AdministrationCalendarComponent implements OnInit {
     endDate: [[new Date()], Validators.required],
     startTime: [null, Validators.required],
     endTime: [null, Validators.required],
+    days: [[]],
     slotDurationMinutes: [[''], Validators.required],
   });
 
-  ngOnInit(): void {
-    this.populateHolidayOptions();
-  }
-
-  populateHolidayOptions() {
-    const currentMonth = new Date().getMonth();
-    this.holidayOptions = [
-      { name: 'Año Nuevo', date: '2024-01-01' },
-      { name: 'Otro Feriado', date: '2024-01-15' },
-    ];
-  }
+  ngOnInit(): void {}
 
   saveConfiguration() {
     if (this.calendarForm.valid) {
@@ -125,6 +102,7 @@ export class AdministrationCalendarComponent implements OnInit {
             summary: 'Registro',
             detail: `Jornada registrada con éxito`,
           });
+          this.cancelConfiguration();
         },
         error: (error) => {
           this.messageService.add({
@@ -145,6 +123,7 @@ export class AdministrationCalendarComponent implements OnInit {
       endDate: '',
       startTime: '',
       endTime: '',
+      days: [],
       slotDurationMinutes: '',
     });
   }
