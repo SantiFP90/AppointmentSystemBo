@@ -1,13 +1,14 @@
 <div class="history-container fadein animation-duration-500">
   <div class="table-container">
     <p-table
-      #dt2
       dataKey="id"
-      [value]="clients"
-      [rows]="3"
-      [rowsPerPageOptions]="[3, 5, 10, 15]"
+      [value]="clients()!"
+      [lazy]="true"
       [paginator]="true"
-      [globalFilterFields]="['name', 'dni']"
+      [rows]="10"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      (onLazyLoad)="loadClientsLazy($event)"
       [tableStyle]="{ 'min-width': '75rem' }"
     >
       <ng-template pTemplate="caption">
@@ -22,14 +23,14 @@
               type="text"
               class="w-full md:w-6 lg:w-3 xl:w-3"
               [(ngModel)]="searchValue"
-              (input)="applyGlobalFilter($event)"
+              (input)="loadClientsLazy({ first: 0, rows: 10 })"
               placeholder="Ej. Lionel Messi"
             />
             <p-button
               label="Limpiar"
               [outlined]="true"
               icon="pi pi-filter-slash"
-              (onClick)="clear(dt2)"
+              (onClick)="clear()"
             />
           </div>
         </div>
@@ -37,27 +38,41 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 34%">Nombre y apellido</th>
-          <th style="width: 22%; text-align: center">DNI</th>
-          <th style="width: 22%; text-align: center">Fecha</th>
-          <th style="width: 22%; text-align: center">Asistencia</th>
+          <th style="width: 22%; text-align: center">Email</th>
+          <th style="width: 22%; text-align: center">Teléfono</th>
+          <th style="width: 22%; text-align: center">Estado</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-client>
         <tr>
           <td>
-            {{ client.name }}
+            {{ client.clientName }}
           </td>
           <td class="text-center">
-            {{ client.dni }}
+            {{ client.clientEmail }}
           </td>
           <td class="text-center">
-            {{ client.date }}
+            {{ client.clientPhoneNumber }}
           </td>
           <td class="text-center">
             <p-tag
-              [value]="client.asist"
-              [severity]="client.asist === 'Asistió' ? 'success' : 'danger'"
-            />
+              [value]="getStatusText(client)"
+              [severity]="
+                client.status === 1
+                  ? 'info'
+                  : client.status === 2
+                  ? 'warning'
+                  : client.status === 3
+                  ? 'help'
+                  : client.status === 4
+                  ? 'success'
+                  : client.status === 5
+                  ? 'danger'
+                  : client.status === 6
+                  ? 'danger'
+                  : 'info'
+              "
+            ></p-tag>
           </td>
         </tr>
       </ng-template>

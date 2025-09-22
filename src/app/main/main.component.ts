@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../shared/components/header/header.component';
+import { TranslateCalendarService } from '../shared/services/translate-calendar.service';
 
 @Component({
   selector: 'app-main',
@@ -12,4 +13,8 @@ import { HeaderComponent } from '../shared/components/header/header.component';
   `,
   styleUrl: './main.component.scss',
 })
-export class MainComponent {}
+export class MainComponent {
+  constructor(private translateCalendarService: TranslateCalendarService) {
+    this.translateCalendarService.configureCalendarToSpanish();
+  }
+}

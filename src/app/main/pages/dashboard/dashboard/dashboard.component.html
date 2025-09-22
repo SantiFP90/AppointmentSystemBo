@@ -3,16 +3,25 @@
     class="flex align-items-center justify-content-center mt-2 gap-3 fadein animation-duration-1000"
   >
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-user"></i> 5</span>
+      <span>
+        <i class="pi pi-user"></i>
+        {{ countAppoiment().pedingAppointmentsToday }}</span
+      >
       <h5>Cantidad de turnos pendientes hoy</h5>
     </div>
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-users"></i> 10</span>
+      <span>
+        <i class="pi pi-users"></i>
+        {{ countAppoiment().pendingAppoimentsThisWeek }}</span
+      >
       <h5>Cantidad de turnos esta semana</h5>
     </div>
     <div class="card-count cards-container p-2">
-      <span> <i class="pi pi-chart-line"></i> 135</span>
-      <h5>Cantidad de turnos realizados</h5>
+      <span>
+        <i class="pi pi-chart-line"></i>
+        {{ countAppoiment().availableAppointments }}</span
+      >
+      <h5>Cantidad de turnos otorgados</h5>
     </div>
     <div
       class="card-count cards-container p-2 text-center cursor-pointer"
@@ -23,17 +32,9 @@
     </div>
   </div>
   <div class="grid mt-2">
-    <div class="card-stadistic col-12 md:col-12 lg:col-6 xl:col-6 p-1">
+    <div class="card-stadistic col-12 p-1">
       <div class="cards-container p-2">
-        <h1>
-          <i class="pi pi-chart-bar"></i> Estadisticas de turnos mensuales
-        </h1>
-        <p-chart type="bar" [data]="data" [options]="options" />
-      </div>
-    </div>
-    <div class="card-stadistic col-12 md:col-12 lg:col-6 xl:col-6 p-1">
-      <div class="cards-container p-2">
-        <h1><i class="pi pi-chart-pie"></i> Estadisticas de turnos anuales</h1>
+        <h1><i class="pi pi-chart-bar"></i> Estadisticas de turnos</h1>
         <p-chart type="bar" [data]="data" [options]="options" />
       </div>
     </div>

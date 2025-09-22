@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
-import { CardModule } from 'primeng/card';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
+import { CountAppoiments } from '../../../Interfaces/count-appoiment.interface';
+import { AppoimentService } from '../../../services/appoiment.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +17,41 @@ export class DashboardComponent implements OnInit {
 
   options: any;
 
-  constructor(private router: Router) {}
+  countAppoiment = signal<CountAppoiments>({
+    availableAppointments: 0,
+    pedingAppointmentsToday: 0,
+    pendingAppoimentsThisWeek: 0,
+  });
+
+  constructor(
+    private router: Router,
+    private appoimentService: AppoimentService
+  ) {
+    effect(() => {
+      const counters = this.countAppoiment();
+      if (!this.data) return;
+      this.data.datasets[0].data = [counters.availableAppointments];
+      this.data.datasets[1].data = [counters.pedingAppointmentsToday];
+      this.data.datasets[2].data = [counters.pendingAppoimentsThisWeek];
+    });
+  }
 
   ngOnInit() {
+    this.getCountAppoiments();
+  }
+
+  getCountAppoiments() {
+    this.appoimentService.getCountAppoiments().subscribe((response) => {
+      this.countAppoiment.set(response.data!);
+      this.initChart();
+    });
+  }
+
+  goCalendar() {
+    this.router.navigate(['main/calendar']);
+  }
+
+  initChart() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -26,29 +60,34 @@ export class DashboardComponent implements OnInit {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['Turnos'],
       datasets: [
         {
           type: 'bar',
-          label: 'Dataset 1',
-          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-          data: [50, 25, 12, 48, 90, 76, 42],
+          label: 'Turnos',
+          backgroundColor: documentStyle.getPropertyValue(
+            'rgba(255, 159, 64, 0.2)'
+          ),
+          data: [this.countAppoiment().availableAppointments],
         },
         {
           type: 'bar',
-          label: 'Dataset 2',
-          backgroundColor: documentStyle.getPropertyValue('--green-500'),
-          data: [21, 84, 24, 75, 37, 65, 34],
+          label: 'Pendientes Hoy',
+          backgroundColor: documentStyle.getPropertyValue(
+            'rgba(54, 163, 235, 0.9)'
+          ),
+          data: [this.countAppoiment().pedingAppointmentsToday],
         },
         {
           type: 'bar',
-          label: 'Dataset 3',
-          backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-          data: [41, 52, 24, 74, 23, 21, 32],
+          label: 'Pendientes Esta Semana',
+          backgroundColor: documentStyle.getPropertyValue(
+            'rgba(153, 102, 255, 0.2)'
+          ),
+          data: [this.countAppoiment().pendingAppoimentsThisWeek],
         },
       ],
     };
-
     this.options = {
       maintainAspectRatio: false,
       aspectRatio: 0.8,
@@ -65,7 +104,7 @@ export class DashboardComponent implements OnInit {
       },
       scales: {
         x: {
-          stacked: true,
+          stacked: false,
           ticks: {
             color: textColorSecondary,
           },
@@ -75,7 +114,7 @@ export class DashboardComponent implements OnInit {
           },
         },
         y: {
-          stacked: true,
+          stacked: false,
           ticks: {
             color: textColorSecondary,
           },
@@ -86,9 +125,5 @@ export class DashboardComponent implements OnInit {
         },
       },
     };
-  }
-
-  goCalendar() {
-    this.router.navigate(['main/calendar']);
   }
 }

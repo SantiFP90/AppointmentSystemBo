@@ -4,8 +4,8 @@
       <p-accordionTab>
         <ng-template pTemplate="header">
           <h3 class="title">
-            <i class="pi pi-exclamation-circle"></i> Administración de
-            Calendario y Turnos
+            <i class="pi pi-exclamation-circle icon-container"></i>
+            Administración de Calendario y Turnos
           </h3>
         </ng-template>
         <div class="info-content">
@@ -26,116 +26,92 @@
     </p-accordion>
   </div>
 
-  <div
-    class="calendar-configuration-container mt-3 fadein animation-duration-1000"
-  >
-    <div class="configuration-section">
-      <h2>Configuración de Calendario</h2>
+  <form [formGroup]="calendarForm">
+    <div
+      class="calendar-configuration-container mt-3 fadein animation-duration-1000"
+    >
+      <div class="configuration-section">
+        <h2>Configuración de <span class="span-title" >Calendario</span></h2>
+        <div class="p-fluid grid">
+          <div class="col-12 md:col-6 mb-2">
+            <div class="flex gap-2 align-items-center">
+              <p-calendar
+                [showIcon]="true"
+                inputId="icondisplay"
+                placeholder="Fecha de Inicio"
+                formControlName="startDate"
+                class="w-full"
+              />
+              <p-calendar
+                [showIcon]="true"
+                inputId="icondisplay"
+                placeholder="Fecha de Fin"
+                formControlName="endDate"
+                class="w-full"
+              />
+            </div>
+          </div>
 
-      <div class="p-fluid grid">
-        <div class="col-12 md:col-6 mb-2">
-          <span class="p-float-label">
-            <p-dropdown
-              [options]="planningPeriodOptions"
-              [(ngModel)]="selectedPlanningPeriod"
-              optionLabel="label"
+          <div class="col-12 md:col-6 mb-2">
+            <p-multiSelect
+              [options]="daysOptions"
+              optionLabel="name"
               optionValue="value"
+              formControlName="days"
+              placeholder="Seleccionar Días"
+              selectedItemsLabel="{0} días seleccionados"
             >
-            </p-dropdown>
-            <label>Período de Planificación</label>
-          </span>
-        </div>
+            </p-multiSelect>
+          </div>
 
-        <div class="col-12 md:col-6 mb-2">
-          <p-multiSelect
-            [options]="daysOptions"
-            [(ngModel)]="selectedDays"
-            optionLabel="name"
-            optionValue="code"
-            placeholder="Seleccionar Días"
-          >
-          </p-multiSelect>
-        </div>
-
-        <div class="col-12 md:col-6">
-          <span class="p-float-label">
+          <div class="col-12 md:col-6">
             <p-dropdown
               [options]="intervalOptions"
-              [(ngModel)]="selectedInterval"
               optionLabel="label"
+              formControlName="slotDurationMinutes"
+              placeholder="Intervalos de Tiempo. Ej: 15 minutos"
               optionValue="value"
             >
             </p-dropdown>
-            <label>Intervalos de Tiempo</label>
-          </span>
-        </div>
-
-        <div class="col-12 md:col-6">
-          <p-dropdown
-            [options]="workShiftOptions"
-            [(ngModel)]="selectedWorkShifts"
-            [filter]="false"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Seleccionar Jornadas"
-          >
-          </p-dropdown>
-          <p-button
-            label="Agregar Jornada"
-            (click)="addWorkShift()"
-            styleClass="mt-2"
-          >
-          </p-button>
-        </div>
-
-        <div class="col-12">
-          <label for="weekends" class="font-semibold">Fines de semana:</label>
-          @for (item of weekendOptions; track $index) {
-          <div name="weekends" class="flex p-1">
-            <p-radioButton
-              [value]="item"
-              [(ngModel)]="selectedWeekendOption"
-              [label]="item.name"
-            >
-            </p-radioButton>
           </div>
-          }
-        </div>
 
-        <div class="col-12">
-          <p-checkbox
-            [(ngModel)]="holidaysEnabled"
-            [binary]="true"
-            label="Habilitar Feriados"
-            class="mb-2"
-          >
-          </p-checkbox>
+          <div class="col-12 md:col-6">
+            <div class="flex gap-2 align-items-center">
+              <p-calendar
+                inputId="calendar-timeonly"
+                placeholder="Hora de Inicio de Jornada. Ej: 08:00"
+                formControlName="startTime"
+                class="w-full"
+                [timeOnly]="true"
+              />
+              <p-calendar
+                placeholder="Hora de Fin de Jornada. Ej: 17:00"
+                inputId="calendar-timeonly"
+                formControlName="endTime"
+                [timeOnly]="true"
+                class="w-full"
+              />
+            </div>
+          </div>
 
-          <p-multiSelect
-            *ngIf="holidaysEnabled"
-            [options]="holidayOptions"
-            [(ngModel)]="selectedHolidays"
-            optionLabel="name"
-            placeholder="Seleccionar Feriados"
-          >
-          </p-multiSelect>
-        </div>
-
-        <div class="col-12 actions-container">
-          <p-button
-            label="Guardar Cambios"
-            (click)="saveConfiguration()"
-            styleClass="p-button-primary"
-          >
-          </p-button>
-          <p-button
-            label="Cancelar"
-            (click)="cancelConfiguration()"
-            styleClass="p-button-secondary"
-          >
-          </p-button>
+          <div class="col-12 actions-container">
+            <p-button
+              label="Guardar Cambios"
+              [disabled]="calendarForm.invalid"
+              (click)="saveConfiguration()"
+              styleClass="p-button-primary"
+            >
+            </p-button>
+            <p-button
+              label="Cancelar"
+              (click)="cancelConfiguration()"
+              styleClass="p-button-secondary"
+            >
+            </p-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
+<p-toast />
