@@ -41,6 +41,7 @@
           <th style="width: 22%; text-align: center">Email</th>
           <th style="width: 22%; text-align: center">Teléfono</th>
           <th style="width: 22%; text-align: center">Estado</th>
+          <th style="width: 22%; text-align: start">Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-client>
@@ -51,8 +52,17 @@
           <td class="text-center">
             {{ client.clientEmail }}
           </td>
-          <td class="text-center">
-            {{ client.clientPhoneNumber }}
+          <td class="text-center iconWhatsApp">
+            <div
+              (click)="
+                openWhatsApp(client.clientName!, client.clientPhoneNumber!)
+              "
+              style="cursor: pointer"
+              title="Comunicarse por WhatsApp"
+            >
+              <span class="underline">{{ client.clientPhoneNumber }}</span>
+              <i class="pi pi-whatsapp pl-1"></i>
+            </div>
           </td>
           <td class="text-center">
             <p-tag
@@ -73,6 +83,15 @@
                   : 'info'
               "
             ></p-tag>
+          </td>
+          <td class="text-center">
+            <p-splitButton
+              title="Acciones"
+              styleClass="p-button-outlined p-button-rounded"
+              (onDropdownClick)="saveAppoiment(client)"
+              appendTo="body"
+              [model]="items"
+            />
           </td>
         </tr>
       </ng-template>

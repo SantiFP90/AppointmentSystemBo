@@ -16,7 +16,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { ToastModule } from 'primeng/toast';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -50,14 +49,12 @@ import { createAppointment } from '../../../main/store/appoiments/actions-appoim
     InputTextareaModule,
     ButtonModule,
     CardModule,
-    ToastModule,
     DropdownModule,
     DialogModule,
     ProgressBarModule,
   ],
   templateUrl: './app-calendar.component.html',
   styleUrls: ['./app-calendar.component.scss'],
-  providers: [MessageService],
 })
 export class AppCalendarComponent implements OnInit {
   appointmentForm: FormGroup;
@@ -344,12 +341,6 @@ export class AppCalendarComponent implements OnInit {
       );
 
       this.closeRegisterModal();
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Turno Registrado',
-        detail: `Se registró el turno para ${formValue.name}`,
-      });
     }
   }
 

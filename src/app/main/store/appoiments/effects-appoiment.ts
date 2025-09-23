@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AppoimentService } from '../../services/appoiment.service';
 import { loadCalendar } from '../calendar/actions-calendar';
 import * as AppoimentActions from './actions-appoiment';
@@ -12,7 +13,8 @@ import * as AppoimentActions from './actions-appoiment';
 export class EffectsAppoiment {
   constructor(
     private actions$: Actions,
-    private appoimentService: AppoimentService
+    private appoimentService: AppoimentService,
+    private messageService: MessageService
   ) {}
 
   loadAppoiment$ = createEffect(() =>
@@ -54,5 +56,35 @@ export class EffectsAppoiment {
         )
       )
     )
+  );
+
+  createAppointmentSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppoimentActions.createAppointmentSuccess),
+        tap(() => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Turno Registrado',
+            detail: 'El turno fue creado con éxito.',
+          });
+        })
+      ),
+    { dispatch: false }
+  );
+
+  createAppointmentFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppoimentActions.createAppointmentFailure),
+        tap(({ error }) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo crear el turno.',
+          });
+        })
+      ),
+    { dispatch: false }
   );
 }

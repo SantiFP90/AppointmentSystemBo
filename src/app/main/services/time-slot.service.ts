@@ -12,7 +12,7 @@ export class TimeSlotService {
 
   private apiUrl = environment.apiUrl;
 
-  getTimeSlots(workingDayId: string): Observable<ApiResponse<any>> {
+  getTimeSlots(workingDayId: string | number): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(
       `${this.apiUrl}/TimeSlot/getAvailableByDay?workingDayId=${workingDayId}`
     );

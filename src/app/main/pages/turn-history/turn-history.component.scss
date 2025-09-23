@@ -25,4 +25,34 @@
     color: #333;
     border: 1px solid #2fa5bf;
   }
+  .p-splitbutton-menubutton,
+  .p-splitbutton.p-button-rounded > .p-splitbutton-menubutton.p-button,
+  .p-splitbutton.p-button-outlined > .p-splitbutton-menubutton.p-button {
+    border: none;
+  }
+  .p-splitbutton .p-splitbutton-defaultbutton,
+  .p-splitbutton.p-button-rounded > .p-splitbutton-defaultbutton.p-button,
+  .p-splitbutton.p-button-outlined > .p-splitbutton-defaultbutton.p-button {
+    display: none;
+    border: none;
+  }
+
+  .p-splitbutton.p-button-outlined > .p-button:not(:disabled):active {
+    background-color: transparent;
+    border: none;
+  }
+
+  .p-splitbutton.p-button-outlined > .p-button:not(:disabled):focus {
+    box-shadow: none;
+  }
+
+  .p-splitbutton.p-button-outlined > .p-button:not(:disabled):hover {
+    box-shadow: none;
+    background-color: transparent;
+  }
+}
+
+.iconWhatsApp {
+  color: #25d366;
+  cursor: pointer;
 }

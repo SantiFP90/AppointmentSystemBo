@@ -58,4 +58,16 @@ export class AppoimentService {
       { headers }
     );
   }
+
+  updateAppointment(
+    id: number,
+    payload: Appointment
+  ): Observable<ApiResponse<null>> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.patch<ApiResponse<null>>(
+      `${this.apiUrl}/Appointment/update?id=${id}`,
+      payload,
+      { headers }
+    );
+  }
 }

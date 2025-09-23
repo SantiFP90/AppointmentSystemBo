@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import {
@@ -28,6 +30,7 @@ import { AppoimentService } from '../../services/appoiment.service';
     CommonModule,
     FormsModule,
     ButtonModule,
+    SplitButtonModule,
   ],
   templateUrl: './turn-history.component.html',
   styleUrl: './turn-history.component.scss',
@@ -40,6 +43,39 @@ export class TurnHistoryComponent {
   totalRecords = 0;
 
   AppointmentStatusEs = AppointmentStatusEs;
+
+  appoiment!: Appointment;
+
+  items: MenuItem[] = [
+    {
+      label: 'Confirmar',
+      icon: 'pi pi-check-square',
+      command: () => {
+        this.updateStatus(this.appoiment, AppointmentStatus.Confirmed);
+      },
+    },
+    {
+      label: 'Finalizado',
+      icon: 'pi pi-check-circle',
+      command: () => {
+        this.updateStatus(this.appoiment, AppointmentStatus.Completed);
+      },
+    },
+    {
+      label: 'No asistió',
+      icon: 'pi pi-times',
+      command: () => {
+        this.updateStatus(this.appoiment, AppointmentStatus.NoShow);
+      },
+    },
+    {
+      label: 'Cancelado',
+      icon: 'pi pi-times-circle',
+      command: () => {
+        this.updateStatus(this.appoiment, AppointmentStatus.Cancelled);
+      },
+    },
+  ];
 
   constructor(private appoimentService: AppoimentService) {}
 
@@ -59,6 +95,19 @@ export class TurnHistoryComponent {
       });
   }
 
+  saveAppoiment(appoiment: Appointment) {
+    this.appoiment = appoiment;
+  }
+
+  updateStatus(client: Appointment, status: AppointmentStatus) {
+    client.status = status;
+    this.appoimentService
+      .updateAppointment(client.id!, client)
+      .subscribe(() => {
+        this.loadClientsLazy({ first: 0, rows: 10 });
+      });
+  }
+
   getStatusText(client: Appointment): string {
     return (
       AppointmentStatusEs[client.status as AppointmentStatus] ?? 'Desconocido'
@@ -68,5 +117,13 @@ export class TurnHistoryComponent {
   clear() {
     this.searchValue = '';
     this.loadClientsLazy({ first: 0, rows: 10 });
+  }
+
+  openWhatsApp(clientName: string, clientNumber: string) {
+    const phoneNumber = clientNumber;
+    const message = `🎰 ¡Hola! ${clientName} te hablamos para consultar tu estado respecto al turno programado.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappURL, '_blank');
   }
 }

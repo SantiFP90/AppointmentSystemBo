@@ -5,17 +5,10 @@ export const ClientRoutes: Routes = [
     path: '',
     children: [
       {
-        path: 'home',
+        path: 'appointmentsClient',
         loadComponent: () =>
-          import('./pages/home/home/home.component').then(
-            (c) => c.HomeComponent
-          ),
-      },
-      {
-        path: 'about',
-        loadComponent: () =>
-          import('./pages/about/about/about.component').then(
-            (c) => c.AboutComponent
+          import('./pages/client-booking/client-booking.component').then(
+            (c) => c.ClientBookingComponent
           ),
       },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
