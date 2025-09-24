@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,5 +14,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(ReactiveFormsModule, FormsModule),
     provideHttpClient(),
     provideAnimations(),
-  ],
+    provideStore(),
+    provideEffects()
+],
 };
