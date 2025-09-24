@@ -11,7 +11,7 @@ export const ClientRoutes: Routes = [
             (c) => c.ClientBookingComponent
           ),
       },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'appointmentsClient', pathMatch: 'full' },
     ],
   },
 ];

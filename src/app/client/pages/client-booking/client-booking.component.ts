@@ -32,6 +32,7 @@ import { CalendarDay } from '../../../main/Interfaces/calendar-appoiments.interf
 import { TimeSlot } from '../../../main/Interfaces/time-slot.interface';
 import { TimeSlotService } from '../../../main/services/time-slot.service';
 import { createAppointment } from '../../../main/store/appoiments/actions-appoiment';
+import { ClientRegisterService } from '../../../shared/services/client-register.service';
 
 interface BookingStep {
   id: number;
@@ -87,11 +88,18 @@ export class ClientBookingComponent implements OnInit {
 
   minDate: Date | undefined;
 
+  password: string | undefined;
+
+  isCanClient: boolean = false;
+  isClientRegistered: boolean = false;
+  idUser: number | undefined;
+
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
     private store: Store,
-    private timeSlotService: TimeSlotService
+    private timeSlotService: TimeSlotService,
+    private clientRegisterService: ClientRegisterService
   ) {
     this.minDate = new Date();
     this.bookingForm = this.fb.group({
@@ -104,8 +112,11 @@ export class ClientBookingComponent implements OnInit {
         ],
       ],
       dni: ['', [Validators.required, Validators.pattern(/^[0-9]{7,10}$/)]],
-      clientEmail: ['', [Validators.email]],
-      clientPhoneNumber: ['', [Validators.pattern(/^[0-9+\s-]{7,20}$/)]],
+      clientEmail: ['', [Validators.required, Validators.email]],
+      clientPhoneNumber: [
+        '',
+        [Validators.required, Validators.pattern(/^[0-9+\s-]{7,20}$/)],
+      ],
       description: ['', [Validators.maxLength(500)]],
     });
 
@@ -178,7 +189,6 @@ export class ClientBookingComponent implements OnInit {
 
   private loadTimeSlotsForDate(date: Date) {
     this.timeSlots.set([]);
-
     this.isLoading.set(true);
 
     const calendarDays: CalendarDay[] = this.calendarData();
@@ -190,6 +200,7 @@ export class ClientBookingComponent implements OnInit {
     if (selectedDay) {
       this.timeSlotService.getTimeSlots(selectedDay.workingDayId).subscribe({
         next: (response) => {
+          console.log(response);
           if (response.success) {
             const availableSlots = response.data.filter(
               (slot: TimeSlot) => slot.isAvailable
@@ -233,7 +244,7 @@ export class ClientBookingComponent implements OnInit {
       const selectedSlot = this.selectedSlot()!;
 
       const payload: Appointment = {
-        clientId: 0,
+        clientId: this.idUser || 0,
         timeSlotId: selectedSlot.id,
         clientName: formValue.name,
         clientEmail: formValue.clientEmail || null,
@@ -241,6 +252,8 @@ export class ClientBookingComponent implements OnInit {
         notes: formValue.description ?? null,
         amount: 10000,
       };
+
+      console.log(payload);
 
       this.store.dispatch(
         createAppointment({
@@ -256,6 +269,43 @@ export class ClientBookingComponent implements OnInit {
         this.showConfirmation.set(true);
       }, 2000);
     }
+  }
+
+  submitClientRegister() {
+    let formData: FormData = new FormData();
+    let roleId = 2;
+
+    formData.append('fullName', this.bookingForm.get('name')?.value);
+    formData.append(
+      'phoneNumber',
+      this.bookingForm.get('clientPhoneNumber')?.value
+    );
+    formData.append('age', '1');
+    formData.append('dni', this.bookingForm.get('dni')?.value);
+    formData.append('email', this.bookingForm.get('clientEmail')?.value);
+    formData.append('password', this.password || '');
+    formData.append('roleId', roleId.toString());
+
+    this.clientRegisterService.createClient(formData).subscribe({
+      next: (response) => {
+        if (response) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registro exitoso',
+          });
+          this.isClientRegistered = true;
+
+          this.idUser = response.data!.id;
+        }
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error en el registro',
+          detail: err.message,
+        });
+      },
+    });
   }
 
   // Reset booking
@@ -292,10 +342,8 @@ export class ClientBookingComponent implements OnInit {
     const total = 5;
 
     if (controls['name'].value) filled++;
-    if (controls['dni'].value) filled++;
     if (controls['clientEmail'].value) filled++;
     if (controls['clientPhoneNumber'].value) filled++;
-    if (controls['description'].value) filled++;
 
     return Math.round((filled / total) * 100);
   }

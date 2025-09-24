@@ -110,11 +110,11 @@
     <!-- Step 3: Personal Information -->
     <div *ngIf="currentStep() === 3" class="step-content form-section">
       <div class="step-header">
-        <h2><i class="pi pi-user"></i> Tus Datos</h2>
+        <h2><i class="pi pi-user"></i>Tus Datos</h2>
         <p>Completa la información para confirmar tu turno</p>
       </div>
 
-      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="bookingForm">
         <div class="form-grid">
           <div class="field">
             <label for="name">Nombre Completo *</label>
@@ -124,6 +124,7 @@
               pInputText
               formControlName="name"
               placeholder="Tu nombre completo"
+              [readonly]="isClientRegistered"
               [class.ng-invalid]="
                 bookingForm.get('name')?.invalid &&
                 bookingForm.get('name')?.touched
@@ -148,6 +149,7 @@
               pInputText
               formControlName="dni"
               placeholder="Tu número de documento"
+              [readonly]="isClientRegistered"
               [class.ng-invalid]="
                 bookingForm.get('dni')?.invalid &&
                 bookingForm.get('dni')?.touched
@@ -165,13 +167,14 @@
           </div>
 
           <div class="field">
-            <label for="email">Email</label>
+            <label for="email">Email *</label>
             <input
               id="email"
               type="email"
               pInputText
               formControlName="clientEmail"
               placeholder="tu@email.com"
+              [readonly]="isClientRegistered"
               [class.ng-invalid]="
                 bookingForm.get('clientEmail')?.invalid &&
                 bookingForm.get('clientEmail')?.touched
@@ -186,21 +189,41 @@
             >
               Ingresa un email válido
             </small>
+
+            <small
+              class="error-message"
+              *ngIf="
+                bookingForm.get('clientEmail')?.hasError('required') &&
+                bookingForm.get('clientEmail')?.touched
+              "
+            >
+              El email es requerido
+            </small>
           </div>
 
           <div class="field">
-            <label for="phone">Teléfono</label>
+            <label for="phone">Teléfono *</label>
             <input
               id="phone"
               type="tel"
               pInputText
               formControlName="clientPhoneNumber"
               placeholder="+54 9 11 1234-5678"
+              [readonly]="isClientRegistered"
               [class.ng-invalid]="
                 bookingForm.get('clientPhoneNumber')?.invalid &&
                 bookingForm.get('clientPhoneNumber')?.touched
               "
             />
+            <small
+              class="error-message"
+              *ngIf="
+                bookingForm.get('clientPhoneNumber')?.hasError('required') &&
+                bookingForm.get('clientPhoneNumber')?.touched
+              "
+            >
+              El teléfono es requerido
+            </small>
           </div>
 
           <div class="field full-width">
@@ -212,6 +235,7 @@
               placeholder="Algún detalle adicional que quieras agregar..."
               rows="3"
               [autoResize]="true"
+              [readonly]="isClientRegistered"
             >
             </textarea>
           </div>
@@ -232,12 +256,51 @@
         </div>
       </form>
 
+      @if(isCanClient){
+      <p>
+        <i class="pi pi-lock"></i>
+        Por favor, ingresa una contraseña para ser cliente. Utilizaremos su
+        email para el usuario.
+      </p>
+      <div class="register-container">
+        <input
+          id="password"
+          type="password"
+          pInputText
+          placeholder="Ingrese una contraseña"
+          class="w-8"
+          [(ngModel)]="password"
+        />
+        <p-button
+          label="Registrarse"
+          icon="pi pi-user-plus"
+          severity="secondary"
+          (click)="submitClientRegister()"
+        >
+        </p-button>
+        <p-button
+          label="Cancelar"
+          icon="pi pi-times"
+          severity="secondary"
+          (click)="isCanClient = false"
+        >
+        </p-button>
+      </div>
+      }
+
       <div class="navigation-buttons">
         <p-button
           label="Anterior"
           icon="pi pi-arrow-left"
           severity="secondary"
           (click)="previousStep()"
+        >
+        </p-button>
+        <p-button
+          label="Quiero ser cliente"
+          icon="pi pi-user-plus"
+          severity="secondary"
+          (click)="isCanClient = true"
         >
         </p-button>
         <p-button

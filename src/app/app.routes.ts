@@ -24,7 +24,7 @@ export const routes: Routes = [
       ...ClientRoutes,
       {
         path: '**',
-        redirectTo: 'home',
+        redirectTo: 'appointmentsClient',
       },
     ],
   },
@@ -42,11 +42,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'client/home',
+    redirectTo: 'client/appointmentsClient',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'client/home',
+    redirectTo: 'client/appointmentsClient',
   },
 ];
