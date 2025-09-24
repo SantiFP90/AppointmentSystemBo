@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { AccordionModule } from 'primeng/accordion';
-import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AccordionModule } from 'primeng/accordion';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ToastModule } from 'primeng/toast';
+import { WorkingDaysService } from '../../services/working-days.service';
 
 @Component({
   selector: 'app-administration-calendar',
@@ -26,27 +35,23 @@ import { CommonModule } from '@angular/common';
     InputTextModule,
     CalendarModule,
     RadioButtonModule,
+    ReactiveFormsModule,
+    ToastModule,
   ],
   templateUrl: './administration-calendar.component.html',
   styleUrl: './administration-calendar.component.scss',
+  providers: [MessageService],
 })
 export class AdministrationCalendarComponent implements OnInit {
-  // Planning Period Options
-  planningPeriodOptions = [
-    { label: 'Mensual', value: 'monthly' },
-    { label: 'Anual', value: 'yearly' },
-  ];
-  selectedPlanningPeriod?: string | null;
-
   // Days Options
   daysOptions = [
-    { name: 'Lunes', code: 'MON' },
-    { name: 'Martes', code: 'TUE' },
-    { name: 'Miércoles', code: 'WED' },
-    { name: 'Jueves', code: 'THU' },
-    { name: 'Viernes', code: 'FRI' },
-    { name: 'Sábado', code: 'SAT' },
-    { name: 'Domingo', code: 'SUN' },
+    { name: 'Lunes', code: 'MON', value: 1 },
+    { name: 'Domingo', code: 'SUN', value: 0 },
+    { name: 'Martes', code: 'TUE', value: 2 },
+    { name: 'Miércoles', code: 'WED', value: 3 },
+    { name: 'Jueves', code: 'THU', value: 4 },
+    { name: 'Viernes', code: 'FRI', value: 5 },
+    { name: 'Sábado', code: 'SAT', value: 6 },
   ];
   selectedDays: any[] = [];
 
@@ -58,73 +63,68 @@ export class AdministrationCalendarComponent implements OnInit {
     { label: '35 minutos', value: 35 },
     { label: '1 hora', value: 60 },
   ];
-  selectedInterval?: number | null;
 
-  // Work Shift Options
-  workShiftOptions = [
-    { label: '8hs a 13hs y 14hs a 17hs', value: 'shift1' },
-    { label: '9hs a 13hs y 14hs a 18hs', value: 'shift2' },
-  ];
-  selectedWorkShifts: any[] = [];
-  customWorkShifts: any[] = [];
+  constructor(
+    private fb: FormBuilder,
+    private workingDaysService: WorkingDaysService,
+    private messageService: MessageService
+  ) {}
 
-  // Weekend Options
-  weekendOptions = [
-    { name: 'Trabajar sábados y domingos', code: 'ALL_WEEKEND' },
-    { name: 'Sábados y domingos', code: 'WEEKEND' },
-    { name: 'Solo sábados', code: 'SATURDAY' },
-    { name: 'Solo sábados por la mañana', code: 'SATURDAY_MORNING' },
-  ];
-  selectedWeekendOption: any;
+  calendarForm: FormGroup = this.fb.group({
+    startDate: [[new Date()], Validators.required],
+    endDate: [[new Date()], Validators.required],
+    startTime: [null, Validators.required],
+    endTime: [null, Validators.required],
+    days: [[]],
+    slotDurationMinutes: [[''], Validators.required],
+  });
 
-  // Holiday Options
-  holidaysEnabled: boolean = false;
-  holidayOptions: any[] = [];
-  selectedHolidays: any[] = [];
-
-  ngOnInit(): void {
-    // Populate holiday options based on current month
-    this.populateHolidayOptions();
-  }
-
-  populateHolidayOptions() {
-    // Logic to dynamically fetch holidays for current month
-    const currentMonth = new Date().getMonth();
-    // Example mock data
-    this.holidayOptions = [
-      { name: 'Año Nuevo', date: '2024-01-01' },
-      { name: 'Otro Feriado', date: '2024-01-15' },
-    ];
-  }
-
-  addWorkShift() {
-    const newShift = {
-      label: `Turno personalizado ${this.customWorkShifts.length + 1}`,
-      value: `custom_${this.customWorkShifts.length}`,
-    };
-    this.customWorkShifts.push(newShift);
-    this.selectedWorkShifts.push(newShift);
-  }
+  ngOnInit(): void {}
 
   saveConfiguration() {
-    console.log('Configuración guardada:', {
-      planningPeriod: this.selectedPlanningPeriod,
-      selectedDays: this.selectedDays,
-      interval: this.selectedInterval,
-      workShifts: this.selectedWorkShifts,
-      weekendOption: this.selectedWeekendOption,
-      holidays: this.selectedHolidays,
-    });
+    if (this.calendarForm.valid) {
+      const formValue = { ...this.calendarForm.value };
+
+      const formatTime = (date: Date | null): string | null => {
+        if (!date) return null;
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+      };
+
+      formValue.startTime = formatTime(this.calendarForm.value.startTime);
+      formValue.endTime = formatTime(this.calendarForm.value.endTime);
+
+      this.workingDaysService.createWorkingDay(formValue).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registro',
+            detail: `Jornada registrada con éxito`,
+          });
+          this.cancelConfiguration();
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Error al registrar la jornada: ${error.message}`,
+          });
+        },
+      });
+    } else {
+      this.calendarForm.markAllAsTouched();
+    }
   }
 
   cancelConfiguration() {
-    // Reset all configurations
-    this.selectedPlanningPeriod = null;
-    this.selectedDays = [];
-    this.selectedInterval = null;
-    this.selectedWorkShifts = [];
-    this.selectedWeekendOption = null;
-    this.holidaysEnabled = false;
-    this.selectedHolidays = [];
+    this.calendarForm.reset({
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      days: [],
+      slotDurationMinutes: '',
+    });
   }
 }

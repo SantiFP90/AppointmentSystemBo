@@ -1,7 +1,12 @@
 :host ::ng-deep {
+  .p-progressbar .p-progressbar-value {
+    background-color: #b9f2ff !important;
+    border: 2px solid #2fa5bf;
+  }
+
   .calendar-container {
     padding: 1rem;
-    background-color: #edf1ff59;
+    background-color: #edf1ff98;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
   }
@@ -15,7 +20,18 @@
 
   .calendar-card {
     .p-card-body {
-      padding: 1rem;
+      padding: 0.5rem;
+    }
+
+    .fc-v-event .fc-event-title {
+      color: #333 !important;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    .fc-timegrid-event .fc-event-time {
+      color: #333 !important;
+      font-size: 1rem;
     }
 
     .fc {
@@ -29,12 +45,13 @@
       }
 
       .fc-button-primary {
-        background-color: #5a5ffa;
-        border-color: #5a5ffa;
+        color: #333;
+        background-color: #b9f2ff !important;
+        border: 1px solid #2fa5bf;
 
         &:hover {
-          background-color: #443cef;
-          border-color: #443cef;
+          background-color: #b9f2ff !important;
+          border: 1px solid #2fa5bf;
         }
 
         &:focus {
@@ -47,15 +64,20 @@
       }
 
       .fc-event {
-        background-color: #7a88ff;
-        border-color: #7a88ff;
+        background-color: #b9ffc6 !important;
+        border: 2px solid #73fa8b;
+        color: #333 !important;
+        padding: 0 2px;
+        margin: 1px 0;
+        line-height: 1.1;
+        font-size: 0.75rem;
       }
     }
   }
 
   .form-card {
     .p-card-header {
-      background-color: #443cef;
+      background-color: #6c5ce7;
       color: white;
       padding: 1rem;
       border-radius: 0.75rem 0.75rem 0 0;
@@ -74,30 +96,30 @@
       label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #392fd3;
+        color: #5ccee7;
         font-weight: bold;
       }
 
       input,
       textarea,
       .p-dropdown {
-        border: 1px solid #a0b1ff;
         transition: border-color 0.3s, box-shadow 0.3s;
 
         &:focus {
-          border-color: #443cef;
+          border-color: #2fa5bf;
           box-shadow: 0 0 0 2px #c4d1ff;
         }
       }
     }
 
     .minimal-button {
-      background-color: #443cef;
-      border-color: #443cef;
+      color: #333;
+      background-color: #b9f2ff !important;
+      border: 2px solid #2fa5bf;
 
       &:hover {
-        background-color: #392fd3;
-        border-color: #392fd3;
+        background-color: #b9f2ff !important;
+        border: 2px solid #2fa5bf;
       }
 
       &:focus {
@@ -105,9 +127,65 @@
       }
 
       &.p-button-disabled {
-        background-color: #dee6ff;
-        border-color: #dee6ff;
+        background-color: #afb7b9c0 !important;
+        border: 2px solid #2fa5bf;
       }
+    }
+  }
+
+  /* Dropdown time slot styles aligned with palette */
+  .dropdown-item,
+  .dropdown-item-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .time-with-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .status-badge {
+    border-radius: 999px;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .status-badge--free {
+    background-color: #efffe6;
+    color: #5dd32f;
+    border: 1px solid #b3ff99;
+  }
+
+  .status-badge--busy {
+    background-color: #fde8e8;
+    color: #b91c1c;
+    border: 1px solid #f5c2c2;
+  }
+
+  .dropdown-item--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    .time-with-dot {
+      color: #999;
+    }
+
+    .status-dot--busy {
+      background-color: #ccc;
+    }
+
+    .status-badge--busy {
+      background-color: #f5f5f5;
+      color: #999;
+      border-color: #ddd;
     }
   }
 }
@@ -131,22 +209,4 @@
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ddd;
-}
-
-.field p:first-letter {
-  text-transform: capitalize;
-}
-
-.field p:hover {
-  background-color: #eef2ff;
-  border-color: #7a88ff;
-}
-
-.field p.selected {
-  background-color: #7a88ff;
-  color: #fff;
-}
-
-.field p.selected:hover {
-  background-color: #5a5ffa;
 }
