@@ -37,8 +37,9 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 34%">Nombre y apellido</th>
-          <th style="width: 22%; text-align: center">Email</th>
+          <th style="width: 22%">Nombre y apellido</th>
+          <th style="width: 22%">Email</th>
+          <th style="width: 22%; text-align: center">Fecha</th>
           <th style="width: 22%; text-align: center">Teléfono</th>
           <th style="width: 22%; text-align: center">Estado</th>
           <th style="width: 22%; text-align: start">Acciones</th>
@@ -49,8 +50,13 @@
           <td>
             {{ client.clientName }}
           </td>
-          <td class="text-center">
+          <td>
             {{ client.clientEmail }}
+          </td>
+          <td class="text-center" [ngClass]="getDateColorClass(client)">
+            {{ client.workingDayDate | date : "shortDate" }}
+            {{ client.startTime }} /
+            {{ client.endTime }}
           </td>
           <td class="text-center iconWhatsApp">
             <div

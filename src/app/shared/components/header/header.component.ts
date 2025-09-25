@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
@@ -43,12 +43,16 @@ export class HeaderComponent {
       },
     },
     {
-      label: 'Perfil',
+      label: localStorage.getItem('user_name') || 'Usuario',
       icon: 'pi pi-user',
       items: [
         {
           label: 'Cerrar Sesión',
           icon: 'pi pi-lock',
+          command: () => {
+            localStorage.clear();
+            this.router.navigate(['/auth/welcome']);
+          },
         },
         {
           label: 'Editar',
