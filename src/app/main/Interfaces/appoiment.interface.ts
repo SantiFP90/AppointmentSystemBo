@@ -8,4 +8,7 @@ export interface Appointment {
   status?: number;
   notes?: string | null;
   amount?: number | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  workingDayDate?: string | null;
 }

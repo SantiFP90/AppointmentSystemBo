@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 export const MainRoutes: Routes = [
   {
     path: '',
+    data: { roles: ['Admin'] },
     children: [
       {
         path: 'dashboard',

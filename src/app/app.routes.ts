@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
 import { AuthRoutes } from './auth/auth.routes';
-import { MainRoutes } from './main/main.routes';
+import { authGuard } from './auth/guards/auth.guard';
+import { roleGuard } from './auth/guards/role.guard';
 import { ClientRoutes } from './client/client.routes';
+import { MainRoutes } from './main/main.routes';
 
 export const routes: Routes = [
   {
@@ -12,7 +14,7 @@ export const routes: Routes = [
       ...AuthRoutes,
       {
         path: '**',
-        redirectTo: 'login',
+        redirectTo: 'welcome',
       },
     ],
   },
@@ -30,6 +32,8 @@ export const routes: Routes = [
   },
   {
     path: 'main',
+    canActivate: [authGuard],
+    canActivateChild: [roleGuard],
     loadComponent: () =>
       import('./main/main.component').then((m) => m.MainComponent),
     children: [
@@ -42,11 +46,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'client/appointmentsClient',
+    redirectTo: 'auth/welcome',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'client/appointmentsClient',
+    redirectTo: 'auth/welcome',
   },
 ];

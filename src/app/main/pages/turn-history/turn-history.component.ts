@@ -126,4 +126,47 @@ export class TurnHistoryComponent {
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappURL, '_blank');
   }
+
+  getDateColorClass(client: Appointment): string {
+    if (!client.workingDayDate || !client.startTime) {
+      return '';
+    }
+
+    try {
+      let appointmentDateTime: Date;
+
+      if (typeof client.workingDayDate === 'string') {
+        appointmentDateTime = new Date(client.workingDayDate);
+      } else {
+        appointmentDateTime = new Date(client.workingDayDate);
+      }
+
+      if (client.startTime) {
+        const timeParts = client.startTime.split(':');
+        appointmentDateTime.setHours(
+          parseInt(timeParts[0]),
+          parseInt(timeParts[1]),
+          parseInt(timeParts[2] || '0')
+        );
+      }
+
+      const now = new Date();
+
+      const timeDifferenceInHours =
+        (appointmentDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
+
+      if (timeDifferenceInHours < 0) {
+        return 'date-past'; // Azul
+      }
+
+      if (timeDifferenceInHours <= 2) {
+        return 'date-soon'; // Rojo
+      }
+
+      return 'date-future'; // Verde
+    } catch (error) {
+      console.error('Error parsing date:', error, client);
+      return '';
+    }
+  }
 }
