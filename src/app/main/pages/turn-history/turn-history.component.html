@@ -53,10 +53,11 @@
           <td>
             {{ client.clientEmail }}
           </td>
-          <td class="text-center" [ngClass]="getDateColorClass(client)">
-            {{ client.workingDayDate | date : "shortDate" }}
-            {{ client.startTime }} /
-            {{ client.endTime }}
+          <td class="text-center">
+            <span [ngClass]="getDateColorClass(client)">
+              {{ client.workingDayDate | date : "shortDate" }}
+              {{ client.startTime }} / {{ client.endTime }}
+            </span>
           </td>
           <td class="text-center iconWhatsApp">
             <div
@@ -73,6 +74,7 @@
           <td class="text-center">
             <p-tag
               [value]="getStatusText(client)"
+              [rounded]="true"
               [severity]="
                 client.status === 1
                   ? 'info'

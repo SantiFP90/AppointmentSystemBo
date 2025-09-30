@@ -50,6 +50,31 @@
     box-shadow: none;
     background-color: transparent;
   }
+
+  .p-tag.p-tag-info {
+    background-color: #d6f0ff !important;
+    color: #0c3c78 !important;
+  }
+
+  .p-tag.p-tag-success {
+    background-color: #d6ffea !important;
+    color: #0c783c !important;
+  }
+
+  .p-tag.p-tag-help {
+    background-color: #e0e0e0 !important;
+    color: #4a4a4a !important;
+  }
+
+  .p-tag.p-tag-warning {
+    background-color: #fff4d6 !important;
+    color: #7a4e00 !important;
+  }
+
+  .p-tag.p-tag-danger {
+    background-color: #ffd6d6 !important;
+    color: #7a0c0c !important;
+  }
 }
 
 .iconWhatsApp {
@@ -58,16 +83,28 @@
 }
 
 .date-past {
+  background-color: #82b7ec41;
   color: #82b7ec !important;
   font-weight: bold;
+  border-radius: 1rem;
+  border: 1px solid #82b7ec;
+  padding: 5px;
 }
 
 .date-soon {
+  background-color: #eb5d5d41;
   color: #eb5d5d !important;
   font-weight: bold;
+  border-radius: 1rem;
+  border: 1px solid #eb5d5d;
+  padding: 5px;
 }
 
 .date-future {
+  background-color: #7fe48441;
   color: #7fe484 !important;
+  border-radius: 1rem;
   font-weight: bold;
+  border: 1px solid #7fe484;
+  padding: 5px;
 }
