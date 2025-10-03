@@ -20,13 +20,10 @@ export class ClientRegisterService {
     );
   }
 
-  getClientById(clientId: number): Observable<any> {
+  getClientById(): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<any>(
-      `${this.apiUrl}/Auth/getUserById?id=${clientId}`,
-      {
-        headers,
-      }
-    );
+    return this.http.get<any>(`${this.apiUrl}/Auth/getUser`, {
+      headers,
+    });
   }
 }

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, effect, OnInit, OnDestroy, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
 
@@ -63,13 +64,16 @@ interface BookingStep {
   templateUrl: './client-booking.component.html',
   styleUrls: ['./client-booking.component.scss'],
 })
-export class ClientBookingComponent implements OnInit {
+export class ClientBookingComponent implements OnInit, OnDestroy {
   bookingForm: FormGroup;
   currentStep = signal(1);
   selectedDate = signal<Date | null>(null);
   selectedSlot = signal<TimeSlot | null>(null);
   isLoading = signal(false);
   showConfirmation = signal(false);
+
+  // Subscription management
+  private subscriptions = new Subscription();
 
   // Calendar data
   calendarData = toSignal(this.store.select(selectCalendar), {
@@ -111,7 +115,6 @@ export class ClientBookingComponent implements OnInit {
           Validators.minLength(2),
         ],
       ],
-      dni: ['', [Validators.required, Validators.pattern(/^[0-9]{7,10}$/)]],
       clientEmail: ['', [Validators.required, Validators.email]],
       clientPhoneNumber: [
         '',
@@ -135,8 +138,42 @@ export class ClientBookingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Suscribirse al observable para obtener datos del cliente
+    const clientSubscription = this.clientRegisterService
+      .getClientById()
+      .subscribe({
+        next: (response) => {
+          if (response && response.success && response.data) {
+            console.log('Cliente logueado:', response);
+            // Prellenar el formulario con los datos del cliente
+            this.bookingForm.patchValue({
+              name: response.data.fullName,
+              clientEmail: response.data.email,
+              clientPhoneNumber: response.data.phoneNumber,
+            });
+            this.isClientRegistered = true;
+            this.idUser = response.data.id;
+          }
+        },
+        error: (error) => {
+          console.warn(
+            'No hay cliente logueado o error al obtener datos:',
+            error
+          );
+          // No mostrar error al usuario ya que es normal no tener cliente logueado
+          this.isClientRegistered = false;
+          this.idUser = undefined;
+        },
+      });
+
+    this.subscriptions.add(clientSubscription);
+
     const today = new Date();
     this.loadCalendar(today.getMonth() + 1, today.getFullYear());
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   loadCalendar(month: number, year: number) {
@@ -281,7 +318,6 @@ export class ClientBookingComponent implements OnInit {
       this.bookingForm.get('clientPhoneNumber')?.value
     );
     formData.append('age', '1');
-    formData.append('dni', this.bookingForm.get('dni')?.value);
     formData.append('email', this.bookingForm.get('clientEmail')?.value);
     formData.append('password', this.password || '');
     formData.append('roleId', roleId.toString());
@@ -339,7 +375,7 @@ export class ClientBookingComponent implements OnInit {
   getFormProgress(): number {
     const controls = this.bookingForm.controls;
     let filled = 0;
-    const total = 5;
+    const total = 3;
 
     if (controls['name'].value) filled++;
     if (controls['clientEmail'].value) filled++;
@@ -367,4 +403,26 @@ export class ClientBookingComponent implements OnInit {
       (availableDate) => availableDate.toDateString() === date.toDateString()
     );
   };
+
+  // Logout functionality
+  logout(): void {
+    // Limpiar datos del cliente logueado
+    this.isClientRegistered = false;
+    this.idUser = undefined;
+
+    // Limpiar formulario
+    this.bookingForm.reset();
+
+    // Limpiar localStorage y sessionStorage
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Mensaje de confirmación
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Sesión cerrada',
+      detail:
+        'Has cerrado sesión correctamente. Ahora puedes reservar como invitado.',
+    });
+  }
 }

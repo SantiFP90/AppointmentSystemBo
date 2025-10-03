@@ -35,7 +35,15 @@
     <!-- Step 1: Date Selection -->
     <div *ngIf="currentStep() === 1" class="step-content date-selection">
       <div class="step-header">
-        <h2>Selecciona una Fecha</h2>
+        <div class="header-with-logout">
+          <h2>Selecciona una Fecha</h2>
+          <i
+            *ngIf="isClientRegistered"
+            class="pi pi-sign-out logout-icon"
+            title="Cerrar sesión"
+            (click)="logout()"
+          ></i>
+        </div>
         <p>Elige el día que prefieras para tu cita</p>
       </div>
 
@@ -115,59 +123,49 @@
       </div>
 
       <form [formGroup]="bookingForm">
+        <!-- Progress Bar -->
+        <div class="form-progress">
+          <div class="progress-info">
+            <span>Progreso del formulario</span>
+            <span>{{ getFormProgress() }}%</span>
+          </div>
+          <p-progressBar
+            [value]="getFormProgress()"
+            [showValue]="false"
+            styleClass="custom-progress"
+          >
+          </p-progressBar>
+        </div>
+        <div class="input-class mb-3">
+          <label for="name"
+            >Nombre Completo <span class="text-red-600">*</span></label
+          >
+          <input
+            class="w-full mt-1"
+            id="name"
+            type="text"
+            pInputText
+            formControlName="name"
+            placeholder="Tu nombre completo"
+            [readonly]="isClientRegistered"
+            [class.ng-invalid]="
+              bookingForm.get('name')?.invalid &&
+              bookingForm.get('name')?.touched
+            "
+          />
+          <small
+            class="error-message"
+            *ngIf="
+              bookingForm.get('name')?.invalid &&
+              bookingForm.get('name')?.touched
+            "
+          >
+            El nombre es requerido y debe tener al menos 2 caracteres
+          </small>
+        </div>
         <div class="form-grid">
           <div class="field">
-            <label for="name">Nombre Completo *</label>
-            <input
-              id="name"
-              type="text"
-              pInputText
-              formControlName="name"
-              placeholder="Tu nombre completo"
-              [readonly]="isClientRegistered"
-              [class.ng-invalid]="
-                bookingForm.get('name')?.invalid &&
-                bookingForm.get('name')?.touched
-              "
-            />
-            <small
-              class="error-message"
-              *ngIf="
-                bookingForm.get('name')?.invalid &&
-                bookingForm.get('name')?.touched
-              "
-            >
-              El nombre es requerido y debe tener al menos 2 caracteres
-            </small>
-          </div>
-
-          <div class="field">
-            <label for="dni">DNI *</label>
-            <input
-              id="dni"
-              type="text"
-              pInputText
-              formControlName="dni"
-              placeholder="Tu número de documento"
-              [readonly]="isClientRegistered"
-              [class.ng-invalid]="
-                bookingForm.get('dni')?.invalid &&
-                bookingForm.get('dni')?.touched
-              "
-            />
-            <small
-              class="error-message"
-              *ngIf="
-                bookingForm.get('dni')?.invalid &&
-                bookingForm.get('dni')?.touched
-              "
-            >
-              DNI debe tener entre 7 y 10 dígitos
-            </small>
-          </div>
-
-          <div class="field">
-            <label for="email">Email *</label>
+            <label for="email">Email <span class="text-red-600">*</span></label>
             <input
               id="email"
               type="email"
@@ -202,7 +200,9 @@
           </div>
 
           <div class="field">
-            <label for="phone">Teléfono *</label>
+            <label for="phone"
+              >Teléfono <span class="text-red-600">*</span></label
+            >
             <input
               id="phone"
               type="tel"
@@ -239,20 +239,6 @@
             >
             </textarea>
           </div>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="form-progress">
-          <div class="progress-info">
-            <span>Progreso del formulario</span>
-            <span>{{ getFormProgress() }}%</span>
-          </div>
-          <p-progressBar
-            [value]="getFormProgress()"
-            [showValue]="false"
-            styleClass="custom-progress"
-          >
-          </p-progressBar>
         </div>
       </form>
 
@@ -297,6 +283,7 @@
         >
         </p-button>
         <p-button
+          *ngIf="!isClientRegistered"
           label="Quiero ser cliente"
           icon="pi pi-user-plus"
           severity="secondary"
@@ -385,6 +372,3 @@
     </div>
   </div>
 </div>
-
-<!-- Toast Messages -->
-<p-toast position="top-center" [life]="5000"></p-toast>
